@@ -25,6 +25,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
 
+
     
     @IBOutlet weak var slouchLabel: NSTextField!
     var calibratedDouble : Double!
