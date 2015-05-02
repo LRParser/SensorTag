@@ -14,9 +14,24 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
     
-    var calibratedX : Double!
-    var calibratedY : Double!
-    var calibratedZ : Double!
+    @IBOutlet weak var currentDiff: NSTextField!
+    
+    var allowedDiff : Double = 0.0
+    
+    @IBAction func didCalibrate(sender: NSTextField) {
+        print("Calibrate text added");
+        allowedDiff = sender.doubleValue;
+        print("Allowed diff \(allowedDiff)")
+    }
+
+
+    
+    @IBOutlet weak var slouchLabel: NSTextField!
+    var calibratedDouble : Double!
+    
+    var calibratedX : Double! = 0
+    var calibratedY : Double! = 0
+    var calibratedZ : Double! = 0
     // Sensor Values
     var allSensorLabels : [String] = []
     var allSensorValues : [Double] = []
@@ -32,18 +47,35 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var gyroscopeX : Double!
     var gyroscopeY : Double!
     var gyroscopeZ : Double!
-    var hasBeenCalibrated : Bool!
+    var hasMagValues : Bool = false;
+    
+    var hasBeenCalibrated : Bool = false
+    
+    @IBOutlet weak var magXLabel: NSTextField!
+    
+    @IBOutlet weak var magYLabel: NSTextField!
+    
+    @IBOutlet weak var magZLabel: NSTextField!
+    
+    @IBOutlet weak var magXDiff: NSTextField!
+    
+    @IBOutlet weak var magYDiff: NSTextField!
+    
+    @IBOutlet weak var magZDiff: NSTextField!
     
     var sumSquaredErrors : Double!
     
     @IBAction func calibrateButton(sender: AnyObject) {
         
-        hasBeenCalibrated = true;
+        if(self.hasMagValues) {
         self.calibratedX = self.magnetometerX;
         self.calibratedY = self.magnetometerY;
         self.calibratedZ = self.magnetometerZ;
         
+        self.hasBeenCalibrated = true;
+        
         println("Calibrated \(self.calibratedX), \(self.calibratedY), \(self.calibratedZ)");
+        }
         
     }
     // BLE
@@ -79,11 +111,15 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         if central.state == CBCentralManagerState.PoweredOn {
             // Scan for peripherals if BLE is turned on
             central.scanForPeripheralsWithServices(nil, options: nil)
+            
             self.statusLabel.stringValue = "Searching for BLE Devices"
+            println(self.statusLabel.stringValue);
         }
         else {
             // Can have different conditions for all states if needed - show generic alert for now
             self.statusLabel.stringValue = "Not connected";
+            println(self.statusLabel.stringValue);
+
         }
     }
     
@@ -95,7 +131,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             
             // Update Status Label
             self.statusLabel.stringValue = "Sensor Tag Found"
-            
+            println(self.statusLabel.stringValue);
+
             // Stop scanning, set as the peripheral to use and establish connection
             self.centralManager.stopScan()
             self.sensorTagPeripheral = peripheral
@@ -104,6 +141,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else {
             self.statusLabel.stringValue = "Sensor Tag NOT Found"
+            println(self.statusLabel.stringValue);
+
             //showAlertWithText(header: "Warning", message: "SensorTag Not Found")
         }
     }
@@ -111,6 +150,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     // Discover services of the peripheral
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         self.statusLabel.stringValue = "Discovering peripheral services"
+        println(self.statusLabel.stringValue);
+
         peripheral.discoverServices(nil)
     }
     
@@ -118,6 +159,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     // If disconnected, start searching again
     func centralManager(central: CBCentralManager!, didDisconnectPeripheral peripheral: CBPeripheral!, error: NSError!) {
         self.statusLabel.stringValue = "Disconnected"
+        println(self.statusLabel.stringValue);
+
         central.scanForPeripheralsWithServices(nil, options: nil)
     }
     
@@ -133,6 +176,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     // (Others are not implemented)
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         self.statusLabel.stringValue = "Looking at peripheral services"
+        println(self.statusLabel.stringValue);
+
         for service in peripheral.services {
             let thisService = service as! CBService
             if SensorTag.validService(thisService) {
@@ -170,7 +215,6 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
         
         self.statusLabel.stringValue = "Connected"
-        println("Magnometer");
 
         if characteristic.UUID == IRTemperatureDataUUID {
             self.ambientTemperature = SensorTag.getAmbientTemperature(characteristic.value())
@@ -199,7 +243,53 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             self.allSensorValues[6] = self.magnetometerX
             self.allSensorValues[7] = self.magnetometerY
             self.allSensorValues[8] = self.magnetometerZ
-            println("Magnometer");
+            
+            print("MagX \(self.magnetometerX), MagY \(self.magnetometerY), MagZ \(self.magnetometerZ))");
+            
+            self.hasMagValues = true;
+            
+            print("hasMagValues");
+            
+            self.magXLabel.doubleValue = self.magnetometerX
+            
+            self.magYLabel.doubleValue = self.magnetometerY
+            
+            self.magZLabel.doubleValue = self.magnetometerZ
+            
+            if(self.hasBeenCalibrated) {
+            var xDiff : Double = pow(self.magnetometerX - self.calibratedX,2)
+                
+                println("xDiff \(xDiff)")
+            
+            self.magXDiff.doubleValue = xDiff;
+            
+            var yDiff : Double = pow(self.magnetometerY - self.calibratedY,2)
+                
+                println("yDiff \(xDiff)")
+
+            
+            self.magYDiff.doubleValue = yDiff;
+            
+            var zDiff : Double = pow(self.magnetometerZ - self.calibratedZ, 2);
+                
+                println("zDiff \(xDiff)")
+
+            
+            self.magZDiff.doubleValue = zDiff;
+            
+            var sumSquaredErrors : Double = xDiff + yDiff + zDiff;
+            
+            currentDiff.doubleValue = sumSquaredErrors;
+            
+            if(sumSquaredErrors > self.allowedDiff) {
+                self.slouchLabel.stringValue = "TRUE"
+            }
+            else {
+                self.slouchLabel.stringValue = "FALSE"
+            }
+                
+            }
+            
 
         }
         else if characteristic.UUID == GyroscopeDataUUID {
@@ -210,7 +300,6 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             self.allSensorValues[9] = self.gyroscopeX
             self.allSensorValues[10] = self.gyroscopeY
             self.allSensorValues[11] = self.gyroscopeZ
-            println("Gyroscope");
         }
         else if characteristic.UUID == BarometerDataUUID {
             //println("BarometerDataUUID")
