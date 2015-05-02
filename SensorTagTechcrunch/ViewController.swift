@@ -13,10 +13,14 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
-    
+    @IBOutlet weak var statusMenu: NSMenu!
+
     @IBOutlet weak var currentDiff: NSTextField!
     
     var allowedDiff : Double = 0.0
+    
+    
+    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
     @IBAction func didCalibrate(sender: NSTextField) {
         print("Calibrate text added");
@@ -86,6 +90,11 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let icon = NSImage(named: "statusicon")
+        icon?.setTemplate(true)
+        statusItem.image = icon;
+        statusItem.menu = statusMenu;
         
         println("View loaded");
 
@@ -284,9 +293,21 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             
             if(sumSquaredErrors > self.allowedDiff) {
                 self.slouchLabel.stringValue = "TRUE"
+                
+                let icon = NSImage(named: "slouchicon")
+                icon?.setTemplate(true)
+                statusItem.image = icon;
+                statusItem.menu = statusMenu;
+                
             }
             else {
                 self.slouchLabel.stringValue = "FALSE"
+                
+                let icon = NSImage(named: "statusicon")
+                icon?.setTemplate(true)
+                statusItem.image = icon;
+                statusItem.menu = statusMenu;
+                
             }
                 
             }
