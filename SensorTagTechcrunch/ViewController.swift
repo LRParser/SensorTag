@@ -70,6 +70,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     var sumSquaredErrors : Double!
     
+    @IBOutlet weak var triggerField: NSTextField!
+    
     @IBAction func calibrateButton(sender: AnyObject) {
         
         if(self.hasMagValues) {
@@ -79,6 +81,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         self.hasBeenCalibrated = true;
         
+            //self.triggerField.doubleValue = 50.00;
+            //self.allowedDiff = 50.00;
+            
         println("Calibrated \(self.calibratedX), \(self.calibratedY), \(self.calibratedZ)");
         }
         
@@ -94,7 +99,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
         var launchPath = "/usr/bin/curl"
         
-        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Stand up and stretch\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T21:00:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
+        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
         
         let icon = NSImage(named: "statusicon")
         icon?.setTemplate(true)
@@ -288,12 +293,14 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             
             var zDiff : Double = pow(self.magnetometerZ - self.calibratedZ, 2);
                 
+                zDiff = self.magnetometerZ - self.calibratedZ;
+                
                 println("zDiff \(xDiff)")
 
             
             self.magZDiff.doubleValue = zDiff;
             
-            var sumSquaredErrors : Double = xDiff + yDiff + zDiff;
+                var sumSquaredErrors : Double = xDiff + yDiff + zDiff;
             
             currentDiff.doubleValue = sumSquaredErrors;
             

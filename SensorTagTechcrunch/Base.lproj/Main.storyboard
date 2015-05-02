@@ -874,6 +874,7 @@
                         <outlet property="slouchLabel" destination="x28-9r-AvB" id="yhM-B4-mh3"/>
                         <outlet property="statusLabel" destination="dEa-dI-1fl" id="UZJ-5R-cOr"/>
                         <outlet property="titleLabel" destination="vqy-jJ-Sh1" id="G3Q-0L-Orj"/>
+                        <outlet property="triggerField" destination="4g5-wy-n8Q" id="kos-GC-twy"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
