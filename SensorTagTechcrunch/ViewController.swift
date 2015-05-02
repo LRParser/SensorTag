@@ -91,6 +91,13 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        var launchPath = "/usr/bin/curl"
+        
+        var args2:NSArray = NSArray(objects: "-u", "joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","\'{\"Subject\": \"Discuss the Calendar REST API\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"I think it will meet our requirements!\"},\"Start\": \"2015-05-02T18:00:00-08:00\",\"StartTimeZone\": \"Pacific Standard Time\",\"End\": \"2015-05-03T19:00:00-08:00\",\"EndTimeZone\": \"Pacific Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}'")
+        
+        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Discuss the Calendar REST API\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"I think it will meet our requirements!\"},\"Start\": \"2015-05-02T18:00:00-08:00\",\"StartTimeZone\": \"Pacific Standard Time\",\"End\": \"2015-05-03T19:00:00-08:00\",\"EndTimeZone\": \"Pacific Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
+        
         let icon = NSImage(named: "statusicon")
         icon?.setTemplate(true)
         statusItem.image = icon;
@@ -98,6 +105,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         println("View loaded");
 
+        
         centralManager = CBCentralManager(delegate: self, queue: nil)
         // Initialize all sensor values and labels
         allSensorLabels = SensorTag.getSensorLabels()

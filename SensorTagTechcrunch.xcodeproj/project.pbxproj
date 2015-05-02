@@ -408,6 +408,7 @@
 				BE11D5401AF54406008C9E78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE11D5411AF54406008C9E78 /* Build configuration list for PBXNativeTarget "SensorTagTechcrunchTests" */ = {
 			isa = XCConfigurationList;
@@ -416,6 +417,7 @@
 				BE11D5431AF54406008C9E78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
