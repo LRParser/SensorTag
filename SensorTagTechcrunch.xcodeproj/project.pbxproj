@@ -12,6 +12,8 @@
 		BE11D52C1AF54406008C9E78 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE11D52B1AF54406008C9E78 /* Images.xcassets */; };
 		BE11D52F1AF54406008C9E78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE11D52D1AF54406008C9E78 /* Main.storyboard */; };
 		BE11D53B1AF54406008C9E78 /* SensorTagTechcrunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE11D53A1AF54406008C9E78 /* SensorTagTechcrunchTests.swift */; };
+		BE11D5451AF54783008C9E78 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE11D5441AF54783008C9E78 /* CoreBluetooth.framework */; };
+		BE11D5471AF547E8008C9E78 /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE11D5461AF547E8008C9E78 /* SensorTag.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,8 @@
 		BE11D5341AF54406008C9E78 /* SensorTagTechcrunchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SensorTagTechcrunchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE11D5391AF54406008C9E78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE11D53A1AF54406008C9E78 /* SensorTagTechcrunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagTechcrunchTests.swift; sourceTree = "<group>"; };
+		BE11D5441AF54783008C9E78 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		BE11D5461AF547E8008C9E78 /* SensorTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE11D5451AF54783008C9E78 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +62,7 @@
 		BE11D5191AF54406008C9E78 = {
 			isa = PBXGroup;
 			children = (
+				BE11D5441AF54783008C9E78 /* CoreBluetooth.framework */,
 				BE11D5241AF54406008C9E78 /* SensorTagTechcrunch */,
 				BE11D5371AF54406008C9E78 /* SensorTagTechcrunchTests */,
 				BE11D5231AF54406008C9E78 /* Products */,
@@ -80,6 +86,7 @@
 				BE11D52B1AF54406008C9E78 /* Images.xcassets */,
 				BE11D52D1AF54406008C9E78 /* Main.storyboard */,
 				BE11D5251AF54406008C9E78 /* Supporting Files */,
+				BE11D5461AF547E8008C9E78 /* SensorTag.swift */,
 			);
 			path = SensorTagTechcrunch;
 			sourceTree = "<group>";
@@ -209,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE11D52A1AF54406008C9E78 /* ViewController.swift in Sources */,
+				BE11D5471AF547E8008C9E78 /* SensorTag.swift in Sources */,
 				BE11D5281AF54406008C9E78 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
