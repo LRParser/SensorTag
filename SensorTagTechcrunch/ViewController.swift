@@ -384,16 +384,17 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                     var formatter = NSDateFormatter()
                     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss-04:00'"
                     formatter.timeZone = NSTimeZone(abbreviation: "EDT")
-                    var currentDateString = formatter.stringFromDate(now);
+                    var nowPlus15 = now.dateByAddingTimeInterval(60 * 15)
+                    var currentDateString = formatter.stringFromDate(nowPlus15);
                     println(currentDateString)
                     
-                    var futureDate = now.dateByAddingTimeInterval(60 * 15)
+                    var futureDate = nowPlus15.dateByAddingTimeInterval(60 * 15)
                     var futureDateString = formatter.stringFromDate(futureDate);
                     println(futureDateString)
                     
                     
-                    var emailAcct = "postureio@outlook.com";
-                    // emailAcct = "joeheenan@postureio.onmicrosoft.com";
+                    // var emailAcct = "postureio@outlook.com";
+                    var emailAcct = "joeheenan@postureio.onmicrosoft.com";
                     
                     
                     var jsonString = "{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"\(currentDateString)\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"\(futureDateString)\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"\(emailAcct)\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}";
