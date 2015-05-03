@@ -9,7 +9,7 @@
 import Cocoa
 import CoreBluetooth
 
-class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
+class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDelegate, LeapListener {
 
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var statusLabel: NSTextField!
@@ -92,15 +92,43 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var centralManager : CBCentralManager!
     var sensorTagPeripheral : CBPeripheral!
     
+    func onConnect(notification: NSNotification!) {
+        println("Leap connected");
+    }
+    
+    func onFrame(notification: NSNotification!) {
+        // println("Leap data received");
+        
+        var controller : LeapController = notification.object as! LeapController;
+        var leapFrame : LeapFrame = controller.frame(0) as LeapFrame!;
+        
+        var leapGestures : [AnyObject]! = leapFrame.gestures(nil) as! [LeapGesture!]
+
+        for gesture in leapGestures {
+            if(gesture.type == LeapGestureType.LEAP_GESTURE_TYPE_CIRCLE && gesture.state == LeapGestureState.LEAP_GESTURE_STATE_START) {
+                println("Circle gesture");
+            }
+            if(gesture.type == LeapGestureType.LEAP_GESTURE_TYPE_SWIPE && gesture.state == LeapGestureState.LEAP_GESTURE_STATE_START) {
+                println("Swipe gesture");
+            }        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var leapController : LeapController = LeapController(listener: self)
+        let leapGestureType = LeapGestureType.LEAP_GESTURE_TYPE_CIRCLE;
+        leapController.enableGesture(leapGestureType, enable: true)
+        leapController.enableGesture(LeapGestureType.LEAP_GESTURE_TYPE_SWIPE, enable: true)
 
         var launchPath = "/usr/bin/curl"
+        titleLabel.integerValue = 100;
         
+        
+        /*
         NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
-        
+        */
         let icon = NSImage(named: "statusicon")
         icon?.setTemplate(true)
         statusItem.image = icon;
@@ -312,6 +340,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                 statusItem.image = icon;
                 statusItem.menu = statusMenu;
                 
+                titleLabel.integerValue = titleLabel.integerValue+1;
+                
+                
             }
             else {
                 self.slouchLabel.stringValue = "FALSE"
@@ -320,6 +351,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                 icon?.setTemplate(true)
                 statusItem.image = icon;
                 statusItem.menu = statusMenu;
+                
+                titleLabel.integerValue = titleLabel.integerValue-1;
                 
             }
                 

@@ -14,6 +14,10 @@
 		BE11D53B1AF54406008C9E78 /* SensorTagTechcrunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE11D53A1AF54406008C9E78 /* SensorTagTechcrunchTests.swift */; };
 		BE11D5451AF54783008C9E78 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE11D5441AF54783008C9E78 /* CoreBluetooth.framework */; };
 		BE11D5471AF547E8008C9E78 /* SensorTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE11D5461AF547E8008C9E78 /* SensorTag.swift */; };
+		BEC29B751AF5C563006643B9 /* LeapObjectiveC.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEC29B741AF5C563006643B9 /* LeapObjectiveC.mm */; };
+		BEC29B771AF5C58B006643B9 /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC29B761AF5C58B006643B9 /* libLeap.dylib */; };
+		BEC29B791AF5C622006643B9 /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = BEC29B761AF5C58B006643B9 /* libLeap.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		BEC29B7C1AF5C673006643B9 /* Sample.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC29B7B1AF5C673006643B9 /* Sample.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +29,19 @@
 			remoteInfo = SensorTagTechcrunch;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BEC29B781AF5C60D006643B9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				BEC29B791AF5C622006643B9 /* libLeap.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BE11D5221AF54406008C9E78 /* SensorTagTechcrunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SensorTagTechcrunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +55,15 @@
 		BE11D53A1AF54406008C9E78 /* SensorTagTechcrunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorTagTechcrunchTests.swift; sourceTree = "<group>"; };
 		BE11D5441AF54783008C9E78 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BE11D5461AF547E8008C9E78 /* SensorTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorTag.swift; sourceTree = "<group>"; };
+		BEC29B701AF5C562006643B9 /* SensorTagTechcrunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SensorTagTechcrunch-Bridging-Header.h"; sourceTree = "<group>"; };
+		BEC29B711AF5C563006643B9 /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Leap.h; sourceTree = "<group>"; };
+		BEC29B721AF5C563006643B9 /* LeapMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapMath.h; sourceTree = "<group>"; };
+		BEC29B731AF5C563006643B9 /* LeapObjectiveC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeapObjectiveC.h; sourceTree = "<group>"; };
+		BEC29B741AF5C563006643B9 /* LeapObjectiveC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LeapObjectiveC.mm; sourceTree = "<group>"; };
+		BEC29B761AF5C58B006643B9 /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libLeap.dylib; sourceTree = "<group>"; };
+		BEC29B7A1AF5C673006643B9 /* Sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sample.h; sourceTree = "<group>"; };
+		BEC29B7B1AF5C673006643B9 /* Sample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sample.m; sourceTree = "<group>"; };
+		BEC29B7D1AF5D00C006643B9 /* LeapGestureType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeapGestureType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC29B771AF5C58B006643B9 /* libLeap.dylib in Frameworks */,
 				BE11D5451AF54783008C9E78 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,12 +108,21 @@
 		BE11D5241AF54406008C9E78 /* SensorTagTechcrunch */ = {
 			isa = PBXGroup;
 			children = (
+				BEC29B761AF5C58B006643B9 /* libLeap.dylib */,
+				BEC29B711AF5C563006643B9 /* Leap.h */,
+				BEC29B721AF5C563006643B9 /* LeapMath.h */,
+				BEC29B7A1AF5C673006643B9 /* Sample.h */,
+				BEC29B7B1AF5C673006643B9 /* Sample.m */,
+				BEC29B731AF5C563006643B9 /* LeapObjectiveC.h */,
+				BEC29B741AF5C563006643B9 /* LeapObjectiveC.mm */,
 				BE11D5271AF54406008C9E78 /* AppDelegate.swift */,
 				BE11D5291AF54406008C9E78 /* ViewController.swift */,
 				BE11D52B1AF54406008C9E78 /* Images.xcassets */,
 				BE11D52D1AF54406008C9E78 /* Main.storyboard */,
 				BE11D5251AF54406008C9E78 /* Supporting Files */,
 				BE11D5461AF547E8008C9E78 /* SensorTag.swift */,
+				BEC29B701AF5C562006643B9 /* SensorTagTechcrunch-Bridging-Header.h */,
+				BEC29B7D1AF5D00C006643B9 /* LeapGestureType.h */,
 			);
 			path = SensorTagTechcrunch;
 			sourceTree = "<group>";
@@ -126,6 +162,7 @@
 				BE11D51E1AF54406008C9E78 /* Sources */,
 				BE11D51F1AF54406008C9E78 /* Frameworks */,
 				BE11D5201AF54406008C9E78 /* Resources */,
+				BEC29B781AF5C60D006643B9 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -216,6 +253,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE11D52A1AF54406008C9E78 /* ViewController.swift in Sources */,
+				BEC29B751AF5C563006643B9 /* LeapObjectiveC.mm in Sources */,
+				BEC29B7C1AF5C673006643B9 /* Sample.m in Sources */,
 				BE11D5471AF547E8008C9E78 /* SensorTag.swift in Sources */,
 				BE11D5281AF54406008C9E78 /* AppDelegate.swift in Sources */,
 			);
@@ -290,6 +329,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = SensorTagTechcrunch;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -327,6 +367,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SensorTagTechcrunch;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -335,10 +376,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SensorTagTechcrunch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SensorTagTechcrunch",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SensorTagTechcrunch/SensorTagTechcrunch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -346,10 +394,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SensorTagTechcrunch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SensorTagTechcrunch",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SensorTagTechcrunch/SensorTagTechcrunch-Bridging-Header.h";
 			};
 			name = Release;
 		};
