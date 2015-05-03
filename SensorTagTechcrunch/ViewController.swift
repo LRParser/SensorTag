@@ -17,6 +17,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
 
     @IBOutlet weak var currentDiff: NSTextField!
     
+    @IBOutlet weak var postureImage: NSImageCell!
+    
     var allowedDiff : Double = 0.0
     var breakScore : Double = 10.0;
     
@@ -63,6 +65,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var hasBeenCalibrated : Bool = false
     var launchPath = "/usr/bin/curl"
 
+    let straightImage = NSImage(named: "appImagesStraight")
+    
+    let slouchImage = NSImage(named: "appImagesSlouch")
     
     @IBOutlet weak var magXLabel: NSTextField!
     
@@ -96,6 +101,12 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         
     }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.view.window!.title = "posture.io"
+    }
+    
     // BLE
     var centralManager : CBCentralManager!
     var sensorTagPeripheral : CBPeripheral!
@@ -147,6 +158,10 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         icon?.setTemplate(true)
         statusItem.image = icon;
         statusItem.menu = statusMenu;
+        
+        
+
+        postureImage.image = straightImage;
         
         println("View loaded");
 
@@ -349,6 +364,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             if(sumSquaredErrors > self.allowedDiff) {
                 self.slouchLabel.stringValue = "TRUE"
                 
+                postureImage.image = slouchImage;
+
+                
                 let icon = NSImage(named: "slouchicon")
                 icon?.setTemplate(true)
                 statusItem.image = icon;
@@ -393,6 +411,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             }
             else {
                 self.slouchLabel.stringValue = "FALSE"
+                
+                postureImage.image = straightImage;
                 
                 let icon = NSImage(named: "statusicon")
                 icon?.setTemplate(true)
