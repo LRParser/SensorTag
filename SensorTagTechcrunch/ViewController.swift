@@ -55,6 +55,8 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var hasMagValues : Bool = false;
     
     var hasBeenCalibrated : Bool = false
+    var launchPath = "/usr/bin/curl"
+
     
     @IBOutlet weak var magXLabel: NSTextField!
     
@@ -110,25 +112,41 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             }
             if(gesture.type == LeapGestureType.LEAP_GESTURE_TYPE_SWIPE && gesture.state == LeapGestureState.LEAP_GESTURE_STATE_START) {
                 println("Swipe gesture");
-            }        }
+                titleLabel.doubleValue = titleLabel.doubleValue + 0.1;
+            
+            }
+        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        var now = NSDate()
+        var formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        formatter.timeZone = NSTimeZone(abbreviation: "EDT")
+        var isoNow = formatter.stringFromDate(now)
+        
+        
+        var futureDate = now.dateByAddingTimeInterval(60 * 15)
+        var isoFuture = formatter.stringFromDate(futureDate);
+        
+        var jsonString = "{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-03T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-03T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}";
+        
+        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d",jsonString]);
+        
+        
         var leapController : LeapController = LeapController(listener: self)
         let leapGestureType = LeapGestureType.LEAP_GESTURE_TYPE_CIRCLE;
         leapController.enableGesture(leapGestureType, enable: true)
         leapController.enableGesture(LeapGestureType.LEAP_GESTURE_TYPE_SWIPE, enable: true)
 
-        var launchPath = "/usr/bin/curl"
         titleLabel.integerValue = 100;
         
         
-        /*
-        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
-        */
+
         let icon = NSImage(named: "statusicon")
         icon?.setTemplate(true)
         statusItem.image = icon;
@@ -340,7 +358,13 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                 statusItem.image = icon;
                 statusItem.menu = statusMenu;
                 
-                titleLabel.integerValue = titleLabel.integerValue+1;
+                if(titleLabel.integerValue < 115) {
+                    titleLabel.integerValue = titleLabel.integerValue+1;
+                }
+                
+                NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
+                
+                
                 
                 
             }
