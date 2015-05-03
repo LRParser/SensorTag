@@ -131,6 +131,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             if(gesture.type == LeapGestureType.LEAP_GESTURE_TYPE_SWIPE && gesture.state == LeapGestureState.LEAP_GESTURE_STATE_START) {
                 println("Swipe gesture");
                 titleLabel.doubleValue = titleLabel.doubleValue + 0.1;
+                
+
+                
             
             }
         }
