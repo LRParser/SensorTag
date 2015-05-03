@@ -399,7 +399,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                 statusItem.image = icon;
                 statusItem.menu = statusMenu;
                 
-                titleLabel.integerValue = titleLabel.integerValue-1;
+                //if(titleLabel.doubleValue < 100) {
+                //    titleLabel.doubleValue = titleLabel.doubleValue+0.1;
+                //}
                 
             }
                 
