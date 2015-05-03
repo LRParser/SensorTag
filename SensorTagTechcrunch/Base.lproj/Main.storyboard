@@ -870,6 +870,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="calibrateButton" destination="Qn1-It-Zoe" id="h7i-3b-xfT"/>
                         <outlet property="currentDiff" destination="e76-Kb-Vkl" id="WmI-CC-ELm"/>
                         <outlet property="magXDiff" destination="9aF-hb-x9h" id="SIv-BI-JJk"/>
                         <outlet property="magXLabel" destination="X5j-PQ-bGm" id="3mA-Gi-Cm7"/>

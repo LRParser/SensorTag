@@ -30,6 +30,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         print("Allowed diff \(allowedDiff)")
     }
 
+    @IBOutlet weak var calibrateButton: NSButton!
 
     @IBAction func didSetBreakScore(sender: NSTextField) {
         print("Break score set");
@@ -140,7 +141,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         super.viewDidLoad()
         
         
-        
+        calibrateButton.enabled = false;
         
 
         
@@ -333,6 +334,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
             self.magYLabel.doubleValue = self.magnetometerY
             
             self.magZLabel.doubleValue = self.magnetometerZ
+            
+            calibrateButton.enabled = true;
+
             
             if(self.hasBeenCalibrated) {
             var xDiff : Double = pow(self.magnetometerX - self.calibratedX,2)
