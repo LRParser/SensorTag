@@ -18,7 +18,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var currentDiff: NSTextField!
     
     var allowedDiff : Double = 0.0
-    
+    var breakScore : Double = 10.0;
     
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     
@@ -29,6 +29,11 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     }
 
 
+    @IBAction func didSetBreakScore(sender: NSTextField) {
+        print("Break score set");
+        breakScore = sender.doubleValue;
+        print("Break score \(breakScore)")
+    }
 
     
     @IBOutlet weak var slouchLabel: NSTextField!
@@ -53,6 +58,7 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
     var gyroscopeY : Double!
     var gyroscopeZ : Double!
     var hasMagValues : Bool = false;
+    var alertSent : Bool = false;
     
     var hasBeenCalibrated : Bool = false
     var launchPath = "/usr/bin/curl"
@@ -123,19 +129,9 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
         super.viewDidLoad()
         
         
-        var now = NSDate()
-        var formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        formatter.timeZone = NSTimeZone(abbreviation: "EDT")
-        var isoNow = formatter.stringFromDate(now)
         
         
-        var futureDate = now.dateByAddingTimeInterval(60 * 15)
-        var isoFuture = formatter.stringFromDate(futureDate);
-        
-        var jsonString = "{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-03T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-03T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}";
-        
-        NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d",jsonString]);
+
         
         
         var leapController : LeapController = LeapController(listener: self)
@@ -358,11 +354,38 @@ class ViewController: NSViewController, CBCentralManagerDelegate, CBPeripheralDe
                 statusItem.image = icon;
                 statusItem.menu = statusMenu;
                 
-                if(titleLabel.integerValue < 115) {
-                    titleLabel.integerValue = titleLabel.integerValue+1;
+                if(titleLabel.doubleValue > 0) {
+                    titleLabel.doubleValue = titleLabel.doubleValue - 0.1;
                 }
                 
-                NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d","{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"2015-05-02T20:00:00-05:00\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"2015-05-02T20:05:00-05:00\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"joeheenan@postureio.onmicrosoft.com\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}"])
+                // Schedule a break on outlook.com
+                // for first posture failure
+                if(!alertSent) {
+                
+                    var now = NSDate()
+                    var formatter = NSDateFormatter()
+                    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss-04:00'"
+                    formatter.timeZone = NSTimeZone(abbreviation: "EDT")
+                    var currentDateString = formatter.stringFromDate(now);
+                    println(currentDateString)
+                    
+                    var futureDate = now.dateByAddingTimeInterval(60 * 15)
+                    var futureDateString = formatter.stringFromDate(futureDate);
+                    println(futureDateString)
+                    
+                    
+                    var emailAcct = "postureio@outlook.com";
+                    // emailAcct = "joeheenan@postureio.onmicrosoft.com";
+                    
+                    
+                    var jsonString = "{\"Subject\": \"Posture.io: Micro-strech\",\"Body\": {\"ContentType\": \"HTML\",\"Content\": \"Review exercises at ergodesktop.com\"},\"Start\": \"\(currentDateString)\",\"StartTimeZone\": \"Eastern Standard Time\",\"End\": \"\(futureDateString)\",\"EndTimeZone\": \"Eastern Standard Time\",\"Attendees\": [{\"EmailAddress\": {\"Address\": \"\(emailAcct)\",\"Name\": \"Joe Heenan\"},\"Type\": \"Required\"}]}";
+                    
+                    NSTask.launchedTaskWithLaunchPath(launchPath, arguments: ["-u","joeheenan@postureio.onmicrosoft.com:@377rector", "-X", "POST", "https://outlook.office365.com/api/v1.0/me/events", "-H", "Content-Type: application/json", "-H","Accept: application/json","-d",jsonString]);
+                    
+                    alertSent = true;
+                
+                    
+                }
                 
                 
                 
